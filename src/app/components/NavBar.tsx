@@ -7,7 +7,7 @@ export default function NavBar() {
             href="/"
             className="uppercase font-bold text-md h-12 flex items-center"
           >
-            next storage
+            next store
           </Link>
         </nav>
   )
