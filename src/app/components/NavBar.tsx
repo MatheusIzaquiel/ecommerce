@@ -1,12 +1,11 @@
 "use client"; // Essencial para Clerk no client-side
 
-import { useCartStore } from "@/store";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import Cart from "./Cart";
 
 export default function NavBar() {
-  //const useStore = useCartStore()
+  
 
   return (
     <nav className="fixed top-0 w-full flex items-center justify-between py-2 px-8 z-50 bg-slate-800 text-gray-300">
@@ -17,10 +16,7 @@ export default function NavBar() {
         Next Store
       </Link>
       <div className="flex items-center justify-center gap-8">
-        <div className="relative flex items-center cursor-pointer">
-          <ShoppingCart />
-          <span className="text-[12px] font-bold bg-teal-600 w-3 h-3 rounded-full flex items-center justify-center p-2 absolute -top-3 -right-3 ">1</span>
-        </div>
+        <Cart />
         <div>
           <SignedIn>
             <UserButton
