@@ -10,8 +10,8 @@ type ProductProps = {
 
 export default function Product({ product }: ProductProps) {
   return (
-    <Link href={`/product/${product.id}`}>
-      <div className="flex flex-col shadow-md bg-slate-800 p-5 rounded-2xl justify-between">
+    <div className="flex flex-col shadow-md bg-slate-800 p-5 rounded-2xl justify-between">
+      <Link href={`/product/${product.id}`}>
         <div className="relative w-full h-72 bg-white rounded-2xl overflow-hidden">
           <ProductImage product={product} fill />
         </div>
@@ -19,8 +19,8 @@ export default function Product({ product }: ProductProps) {
           <p className="w-40 truncate">{product.name}</p>
           <p className="text-md text-teal-300">{formatPrice(product.price)}</p>
         </div>
-        <AddCart product={product} />
-      </div>
-    </Link>
+      </Link>
+      <AddCart product={product} />
+    </div>
   );
 }

@@ -1,5 +1,5 @@
+import { Stripe } from "stripe";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { create } from "domain";
 import { first } from "./../../../../../node_modules/effect/src/GroupBy";
 import prisma from "@/libs/prisma";
 import { IncomingHttpHeaders } from "http";
@@ -63,10 +63,22 @@ async function handler(request: Request) {
       ...attributes
     } = evt.data;
 
+    //Inserir usuário no Stripe
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: "2025-08-27.basil",
+    });
+
+    const customer = await stripe.customers.create({
+      name: `${first_name} ${last_name}`,
+      email: email_addresses ? email_addresses[0].email_address : "", 
+      
+    })
+
     await prisma.user.upsert({
       where: { externalId: id as string },
       create: {
         externalId: id as string,
+        stripeCostumerId: customer.id,
         attributes,
       },
       update: {
@@ -75,7 +87,7 @@ async function handler(request: Request) {
     });
   }
 
-  return NextResponse.json({}, { status: 200})
+  return NextResponse.json({}, { status: 200 });
 }
 
 export const GET = handler;
